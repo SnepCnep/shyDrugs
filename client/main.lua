@@ -1,4 +1,5 @@
 ESX = exports['es_extended']:getSharedObject()
+local Config = lib.callback.await('shyDrugs:getConfig', false)
 
 local isDealing = false
 local List = {}

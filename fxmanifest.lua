@@ -15,4 +15,6 @@ client_scripts {
     'notify.lua'
 }
 
+files { 'config.lua'}
+
 server_script 'server/main.lua'

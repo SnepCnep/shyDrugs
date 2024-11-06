@@ -1,8 +1,8 @@
-ESX = nil
 lastloc = {}
+local Config = lib.require('config')
 local Webhook = 'WEBHOOK'
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+ESX = exports['es_extended']:getSharedObject()
 
 RegisterServerEvent('shyDrugs:placeOrder')
 AddEventHandler('shyDrugs:placeOrder', function(bool)
@@ -224,3 +224,17 @@ function sendToDiscord(name, message, color)
     PerformHttpRequest(Webhook, function(err, text, headers) end, 'POST', json.encode({username = 'shyDrugs', embeds = connect, avatar_url = 'https://static.vecteezy.com/system/resources/previews/006/428/710/original/cool-fox-with-sharp-eyes-mascot-logo-design-free-vector.jpg'}), { ['Content-Type'] = 'application/json' })
 end
 sendToDiscord("Script Restarted", "New logging session initialized.", 16711851)
+
+-- // [CALLBACKS] \\ --
+
+local used = {}
+lib.callback.register('shyDrugs:getConfig', function(source)
+    if used[source] then 
+        lib.print.info(('ID: %s Cheating, callback triggered more than once', source)) 
+        return 
+    end
+
+    used[source] = true
+
+    return Config
+end)

@@ -142,3 +142,5 @@ Config.Strings = { -- don't change the numbers, do change the text.
     [39] = "My grandma cooks better meth than this shit. Help me get them!",
     [40] = "Even whipped cream is nicer to snort, holy shit. Lend me a hand catching these fools, will ya?"
 }
+
+return Config
