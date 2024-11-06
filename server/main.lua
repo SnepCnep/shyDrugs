@@ -22,7 +22,7 @@ AddEventHandler('shyDrugs:placeOrder', function(bool)
         lastloc[src] = dealer
     end
 
-    local coords = vector2(Config.DealerCoords[dealer][1], Config.DealerCoords[dealer][2])
+    local coords = vector2(Config.DealerCoords[dealer].x, Config.DealerCoords[dealer].y)
     if Config.lbphone then
         exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.go, nil, cb, nil)
         Citizen.Wait(5000)

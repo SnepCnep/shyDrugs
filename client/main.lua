@@ -85,7 +85,7 @@ AddEventHandler('shyDrugs:SyncNPC', function(coords, nr)
 	while not HasModelLoaded(hash) do
 		Citizen.Wait(1)
 	end	
-	NPC = CreatePed(1, hash, coords[1], coords[2], coords[3]-1, coords[4], false, true)
+	NPC = CreatePed(1, hash, coords.x, coords.y, coords.z-1, coords.h, false, true)
 	SetBlockingOfNonTemporaryEvents(NPC, true)
 	SetPedDiesWhenInjured(NPC, false)
 	SetPedCanPlayAmbientAnims(NPC, true)
@@ -106,7 +106,7 @@ RegisterNetEvent('shyDrugs:DistCheck')
 AddEventHandler('shyDrugs:DistCheck', function(coords, nr)
     local show = false
     local amount = "NoCheating"
-    local pos = vector3(coords[1], coords[2], coords[3])
+    local pos = vector3(coords.x, coords.y, coords.z)
     while true do
         if isDealing then
             local shortestDistance = math.huge
