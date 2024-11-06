@@ -7,7 +7,7 @@ local List = {}
 -- Distance loop
 Citizen.CreateThread(function()
     local show = false
-    local coords = vector3(Config.dealerPos[1], Config.dealerPos[2], Config.dealerPos[3])
+    local coords = vector3(Config.dealerPos.x, Config.dealerPos.y, Config.dealerPos.z)
     while true do
         local shortestDistance = math.huge
         local playerPos = GetEntityCoords(PlayerPedId())
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
 	while not HasModelLoaded(hash) do
 		Citizen.Wait(1)
 	end	
-	dealerNPC = CreatePed(1, hash, Config.dealerPos[1], Config.dealerPos[2], Config.dealerPos[3]-1, Config.dealerPos[4], false, true)
+	dealerNPC = CreatePed(1, hash, Config.dealerPos.x, Config.dealerPos.y, Config.dealerPos.z-1, Config.dealerPos.h, false, true)
 	SetBlockingOfNonTemporaryEvents(dealerNPC, true)
 	SetPedDiesWhenInjured(dealerNPC, false)
 	SetPedCanPlayAmbientAnims(dealerNPC, true)

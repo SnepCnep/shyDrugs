@@ -7,7 +7,7 @@ Config.SQLBan = false -- Enable if using SQLban. CAUTION: Do check if the trigge
 Config.lbphone = true -- True: enable lb_phone messages as notifications. False: use the notify.lua
 
 Config.dealerPed = 'a_m_m_hasjew_01'
-Config.dealerPos = {970.7463, -1144.4193, 25.2000, 153.79}
+Config.dealerPos = { x = 970.7463, y = -1144.4193, z = 25.2000, h = 153.79}
 
 Config.PedType = 'a_m_o_soucent_03'
 
