@@ -47,12 +47,9 @@ end)
 
 -- Dealer NPC
 Citizen.CreateThread(function()
-    local hash = GetHashKey(Config.dealerPed)
-	RequestModel(hash)
-	while not HasModelLoaded(hash) do
-		Citizen.Wait(1)
-	end	
-	dealerNPC = CreatePed(1, hash, Config.dealerPos.x, Config.dealerPos.y, Config.dealerPos.z-1, Config.dealerPos.h, false, true)
+	lib.requestModel(Config.dealerPed)
+
+	dealerNPC = CreatePed(1, joaat(Config.dealerPed), Config.dealerPos.x, Config.dealerPos.y, Config.dealerPos.z-1, Config.dealerPos.h, false, true)
 	SetBlockingOfNonTemporaryEvents(dealerNPC, true)
 	SetPedDiesWhenInjured(dealerNPC, false)
 	SetPedCanPlayAmbientAnims(dealerNPC, true)
