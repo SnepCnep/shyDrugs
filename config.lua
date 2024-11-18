@@ -2,7 +2,10 @@ Config = {}
 
 -- To change the webhook, please do so in server/main.lua, line 3
 
-Config.SQLBan = false -- Enable if using SQLban. CAUTION: Do check if the trigger matches yours. server/main.lua, line 129
+Config.Punishement = function(source)
+    TriggerEvent("BanSql:ICheat", "Automatic ban for cheating (shyDrugs-A)", src)
+    sendToDiscord("shyDrugs", GetPlayerName(source).." triggered the sell event, but is not selling. Hacker.", 16735311)
+end
 
 Config.lbphone = true -- True: enable lb_phone messages as notifications. False: use the notify.lua
 
