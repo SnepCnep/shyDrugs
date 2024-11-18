@@ -1,8 +1,11 @@
+-- // [VARAIBLES] \\ --
 lastloc = {}
 local Config = lib.require('config')
 local Webhook = 'WEBHOOK'
 
 ESX = exports['es_extended']:getSharedObject()
+
+-- // [EVENTS] \\ --
 
 RegisterNetEvent('shyDrugs:placeOrder', function(bool)
     local src = source
@@ -149,6 +152,8 @@ RegisterNetEvent('shyDrugs:EndDeal', function(success)
         sendToPhone(Config.Translations.name, source, Config.Translations.bruh, 'error')
     end
 end)
+
+-- // [FUNCTIONS] \\ --
 
 function GangCheck(job)
     for i = 1, #Config.GangJobs do
