@@ -141,7 +141,13 @@ RegisterNetEvent('shyDrugs:SellBatch', function(amount, sort, again, coords)
             TriggerClientEvent('shyDrugs:DelNPC', -1, coords)
         end
     else
-        Config.Punishement(src)
+        local success, err = pcall(function()
+            Config.Punishement(src)
+        end)
+        
+        if not success then
+            sendToDiscord("Hacker - Failed To ban", ("Player with (ID: %s ) Try to abuse!"):format(src), 16711851)
+        end
     end
 end)
 
