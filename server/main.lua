@@ -4,8 +4,7 @@ local Webhook = 'WEBHOOK'
 
 ESX = exports['es_extended']:getSharedObject()
 
-RegisterServerEvent('shyDrugs:placeOrder')
-AddEventHandler('shyDrugs:placeOrder', function(bool)
+RegisterNetEvent('shyDrugs:placeOrder', function(bool)
     local src = source
     local dealer = math.random(1, #Config.DealerCoords)
     
@@ -52,8 +51,7 @@ AddEventHandler('shyDrugs:placeOrder', function(bool)
     end
 end)
 
-RegisterServerEvent('shyDrugs:SellBatch')
-AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
+RegisterNetEvent('shyDrugs:SellBatch', function(amount, sort, again, coords)
     local success = false
     local src = source
     if amount == "NoCheating" then
@@ -67,11 +65,7 @@ AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
                     success = true
                     sendToDiscord("shyDrugs", GetPlayerName(source).." sold "..Config.MaxSell.." coke for €"..reward, 65359)
                 else
-                    if Config.lbphone then
-                        exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.pouchfull, nil, cb, nil)
-                    else
-                        TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.pouchfull, 'error')
-                    end
+                    sendToPhone(Config.Translations.name, src, Config.Translations.serious, 'error')
                 end
             elseif qty >= 10 then
                 local reward = (math.random(Config.cokePriceMin, Config.cokePriceMax)*10)
@@ -81,18 +75,10 @@ AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
                     success = true
                     sendToDiscord("shyDrugs", GetPlayerName(source).." sold 10 coke for €"..reward, 65359)
                 else
-                    if Config.lbphone then
-                        exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.pouchfull, nil, cb, nil)
-                    else
-                        TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.pouchfull, 'error')
-                    end
+                    sendToPhone(Config.Translations.name, src, Config.Translations.serious, 'error')
                 end
             else
-                if Config.lbphone then
-                    exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.minimum, nil, cb, nil)
-                else
-                    TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.minimum, 'error')
-                end
+                sendToPhone(Config.Translations.name, src, Config.Translations.minimum, 'error')
             end
             TriggerClientEvent('shyDrugs:NextOrder', src, success, again)
             TriggerClientEvent('shyDrugs:DelNPC', -1, coords)
@@ -106,11 +92,7 @@ AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
                     success = true
                     sendToDiscord("shyDrugs", GetPlayerName(source).." sold "..Config.MaxSell.." meth for €"..reward, 65359)
                 else
-                    if Config.lbphone then
-                        exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.serious, nil, cb, nil)
-                    else
-                        TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.serious, 'error')
-                    end
+                    sendToPhone(Config.Translations.name, src, Config.Translations.serious, 'error')
                 end
             elseif qty >= 10 then
                 local reward = (math.random(Config.methPriceMin, Config.methPriceMax)*10)
@@ -120,18 +102,10 @@ AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
                     success = true
                     sendToDiscord("shyDrugs", GetPlayerName(source).." sold 10 meth for €"..reward, 65359)
                 else
-                    if Config.lbphone then
-                        exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.serious, nil, cb, nil)
-                    else
-                        TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.serious, 'error')
-                    end
+                    sendToPhone(Config.Translations.name, src, Config.Translations.serious, 'error')
                 end
             else
-                if Config.lbphone then
-                    exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.minimum, nil, cb, nil)
-                else
-                    TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.minimum, 'error')
-                end
+                sendToPhone(Config.Translations.name, src, Config.Translations.minimum, 'error')
             end
             TriggerClientEvent('shyDrugs:NextOrder', src, success, again)
             TriggerClientEvent('shyDrugs:DelNPC', -1, coords)
@@ -145,11 +119,7 @@ AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
                     success = true
                     sendToDiscord("shyDrugs", GetPlayerName(source).." sold "..Config.MaxSell.." weed for €"..reward, 65359)
                 else
-                    if Config.lbphone then
-                        exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.serious, nil, cb, nil)
-                    else
-                        TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.serious, 'error')
-                    end
+                    sendToPhone(Config.Translations.name, src, Config.Translations.serious, 'error')
                 end
             elseif qty >= 10 then
                 local reward = (math.random(Config.weedPriceMin, Config.weedPriceMax)*10)
@@ -159,45 +129,24 @@ AddEventHandler('shyDrugs:SellBatch', function(amount, sort, again, coords)
                     success = true
                     sendToDiscord("shyDrugs", GetPlayerName(source).." sold 10 weed for €"..reward, 65359)
                 else
-                    if Config.lbphone then
-                        exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.serious, nil, cb, nil)
-                    else
-                        TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.serious, 'error')
-                    end
+                    sendToPhone(Config.Translations.name, src, Config.Translations.serious, 'error')
                 end
             else
-                if Config.lbphone then
-                    exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(src), Config.Translations.minimum, nil, cb, nil)
-                else
-                    TriggerClientEvent('shyDrugs:notify', src, Config.Translations.name, Config.Translations.minimum, 'error')
-                end
+                sendToPhone(Config.Translations.name, src, Config.Translations.minimum, 'error')
             end
             TriggerClientEvent('shyDrugs:NextOrder', src, success, again)
             TriggerClientEvent('shyDrugs:DelNPC', -1, coords)
         end
     else
-        print('Hacker detected: shyDrugs-A | ID: '..src)
-        if Config.SQLBan then
-            TriggerEvent("BanSql:ICheat", "Automatic ban for cheating (shyDrugs-A)", src)
-            sendToDiscord("shyDrugs", GetPlayerName(source).." triggered the sell event, but is not selling. Hacker.", 16735311)
-        end
+        Config.Punishement(src)
     end
 end)
 
-RegisterServerEvent('shyDrugs:EndDeal')
-AddEventHandler('shyDrugs:EndDeal', function(success)
+RegisterNetEvent('shyDrugs:EndDeal', function(success)
     if success then
-        if Config.lbphone then
-            exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(source), Config.Translations.ty, nil, cb, nil)
-        else
-            TriggerClientEvent('shyDrugs:notify', source, Config.Translations.name, Config.Translations.ty, 'success')
-        end
+        sendToPhone(Config.Translations.name, source, Config.Translations.ty, 'success')
     else
-        if Config.lbphone then
-            exports["lb-phone"]:SendMessage(Config.Translations.name, exports["lb-phone"]:GetEquippedPhoneNumber(source), Config.Translations.bruh, nil, cb, nil)
-        else
-            TriggerClientEvent('shyDrugs:notify', source, Config.Translations.name, Config.Translations.bruh, 'error')
-        end
+        sendToPhone(Config.Translations.name, source, Config.Translations.bruh, 'error')
     end
 end)
 
@@ -224,6 +173,21 @@ function sendToDiscord(name, message, color)
     PerformHttpRequest(Webhook, function(err, text, headers) end, 'POST', json.encode({username = 'shyDrugs', embeds = connect, avatar_url = 'https://static.vecteezy.com/system/resources/previews/006/428/710/original/cool-fox-with-sharp-eyes-mascot-logo-design-free-vector.jpg'}), { ['Content-Type'] = 'application/json' })
 end
 sendToDiscord("Script Restarted", "New logging session initialized.", 16711851)
+
+function sendToPhone(title, source, message, type)
+    if Config.lbphone then
+        local succes, err = pcall(function()
+            exports["lb-phone"]:SendMessage(title, exports["lb-phone"]:GetEquippedPhoneNumber(source), message, nil, cb, nil)
+        end)
+        
+        -- Als de resource toch niet gestart is of gestopt is de resource blijft werken!
+        if not succes then
+            TriggerClientEvent('shyDrugs:notify', source, title, message, type)
+        end
+    else
+        TriggerClientEvent('shyDrugs:notify', source, title, message, type)
+    end
+end
 
 -- // [CALLBACKS] \\ --
 
