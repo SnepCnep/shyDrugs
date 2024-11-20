@@ -75,8 +75,7 @@ function SendToBuyer()
 end
 
 -- Net Events
-RegisterNetEvent('shyDrugs:SyncNPC')
-AddEventHandler('shyDrugs:SyncNPC', function(coords, nr)
+RegisterNetEvent('shyDrugs:SyncNPC', function(coords, nr)
     local hash = GetHashKey(Config.PedType)
 	RequestModel(hash)
 	while not HasModelLoaded(hash) do
@@ -93,14 +92,17 @@ AddEventHandler('shyDrugs:SyncNPC', function(coords, nr)
     List[nr] = NPC
 end)
 
-RegisterNetEvent('shyDrugs:DelNPC')
-AddEventHandler('shyDrugs:DelNPC', function(nr)
-    SetEntityAsNoLongerNeeded(List[nr])
-    FreezeEntityPosition(List[nr], false)
+RegisterNetEvent('shyDrugs:DelNPC', function(nr)
+    if List[nr] == nil then return end
+
+    if DoesEntityExist(List[nr]) then
+        SetEntityAsNoLongerNeeded(List[nr])
+        FreezeEntityPosition(List[nr], false)
+    end
+    List[nr] = nil
 end)
 
-RegisterNetEvent('shyDrugs:DistCheck')
-AddEventHandler('shyDrugs:DistCheck', function(coords, nr)
+RegisterNetEvent('shyDrugs:DistCheck', function(coords, nr)
     local show = false
     local amount = "NoCheating"
     local pos = vector3(coords.x, coords.y, coords.z)
@@ -155,6 +157,7 @@ AddEventHandler('shyDrugs:DistCheck', function(coords, nr)
                                 FreezeEntityPosition(List[nr], false)
                                 Citizen.Wait(5000)
                                 DeleteEntity(List[nr])
+				List[nr] = nil
                             end
                         else
                             isDealing = false
@@ -182,8 +185,7 @@ AddEventHandler('shyDrugs:DistCheck', function(coords, nr)
     end
 end)
 
-RegisterNetEvent('shyDrugs:NextOrder')
-AddEventHandler('shyDrugs:NextOrder', function(success, again)
+RegisterNetEvent('shyDrugs:NextOrder', function(success, again)
     Citizen.Wait(5000)
     if again then
         SendToBuyer()
@@ -193,13 +195,11 @@ AddEventHandler('shyDrugs:NextOrder', function(success, again)
     end
 end)
 
-RegisterNetEvent('shyDrugs:notify')
-AddEventHandler('shyDrugs:notify', function(title, text, style)
+RegisterNetEvent('shyDrugs:notify', function(title, text, style)
     Notify(title, text, style)
 end)
 
-RegisterNetEvent('shyDrugs:waypoint')
-AddEventHandler('shyDrugs:waypoint', function(coords)
+RegisterNetEvent('shyDrugs:waypoint', function(coords)
     DeleteWaypoint()
     SetNewWaypoint(coords)
 end)
